@@ -24,7 +24,7 @@ const clients = [
 ]
 
 const purchases = [
-  {id: 1, clientId: 1, value: 100, date: '2023-01-01'},
+  {id: 1, clientId: 1, value: 120, date: '2023-01-01'},
   {id: 2, clientId: 1, value: 100, date: '2023-02-01'},
   {id: 3, clientId: 2, value: 55.32, date: '2023-02-01'},
   {id: 4, clientId: 2, value: 155.32, date: '2023-02-10'},
