@@ -5,6 +5,6 @@ export const installMocks = () => {
   if (!window._mswWorkerInstalled) {
     const worker = setupWorker(...handlers)
     worker.start()
-    ;window._mswWorkerInstalled = 1
+    window._mswWorkerInstalled = 1
   }
 }

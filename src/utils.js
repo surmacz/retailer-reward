@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
-export function useFetchData(url, onSuccess, onError = () => {}, onFinally = () => {}) {
+export function useFetchData(
+  url,
+  onSuccess,
+  onError = () => {},
+  onFinally = () => {}
+) {
   useEffect(() => {
     async function fetchData() {
-      const { installMocks } = await import('./mocks/browser');
-      installMocks();
+      const { installMocks } = await import('./mocks/browser')
+      installMocks()
 
       const response = await fetch(url)
 
@@ -16,6 +21,6 @@ export function useFetchData(url, onSuccess, onError = () => {}, onFinally = () 
       }
       onFinally()
     }
-    fetchData();
+    fetchData()
   }, [])
 }

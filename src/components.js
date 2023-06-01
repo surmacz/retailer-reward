@@ -75,7 +75,7 @@ export const MainHeader = styled.div`
   align-items: center;
   padding: 0 1rem;
   border-bottom: 1px solid gray;
-  gap: 1rem
+  gap: 1rem;
 `
 
 export const TableContainer = styled.div`
