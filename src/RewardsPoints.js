@@ -14,7 +14,7 @@ import {
   Thead,
   Tbody,
   TableContainer,
-} from './styled-components'
+} from './components'
 import { useFetchData } from './utils';
 
 export default function RewardsPoints() {

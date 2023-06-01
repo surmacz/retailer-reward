@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
-import App from './App';
+import Purchases from './Purchases';
 import reportWebVitals from './reportWebVitals';
 import RewardPoints from './RewardsPoints';
 
@@ -13,7 +13,7 @@ import RewardPoints from './RewardsPoints';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Purchases />,
   },
   {
     path: "reward-points/client/:clientId",

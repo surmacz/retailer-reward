@@ -11,7 +11,7 @@ import {
   Thead,
   Tbody,
   TableContainer,
-} from './styled-components'
+} from './components'
 import { useNavigate } from "react-router-dom";
 import { useFetchData } from './utils';
 
