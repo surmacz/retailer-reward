@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {
   Loading,
-  PrimaryButton,
   WarningButton,
   Main,
   MainHeader,
@@ -14,6 +13,7 @@ import {
   TableContainer,
 } from './styled-components'
 import { useNavigate } from "react-router-dom";
+import { useFetchData } from './utils';
 
 
 
@@ -21,25 +21,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [purchases, setPurchases] = useState([])
   const navigate = useNavigate();
-
-
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true)
-      const { installMocks } = await import('./mocks/browser');
-      installMocks();
-
-      const response = await fetch('/purchases')
-
-      if (response.ok) {
-        setPurchases(await response.json())
-      } else {
-        console.error('Error while getting data. Try again!')
-      }
-      setIsLoading(false)
-    }
-    fetchData();
-  }, [])
+  useFetchData('/purchases', setPurchases, () => {}, () => setIsLoading(false))
 
   return (
     <Main>

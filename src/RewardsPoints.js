@@ -15,6 +15,7 @@ import {
   Tbody,
   TableContainer,
 } from './styled-components'
+import { useFetchData } from './utils';
 
 export default function RewardsPoints() {
   const [isLoading, setIsLoading] = useState(true)
@@ -23,23 +24,7 @@ export default function RewardsPoints() {
   const { clientId } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true)
-      const { installMocks } = await import('./mocks/browser');
-      installMocks();
-
-      const response = await fetch('/purchases/client/'+clientId)
-
-      if (response.ok) {
-        setClientPurchases(await response.json())
-      } else {
-        console.error('Error while getting data. Try again!')
-      }
-      setIsLoading(false)
-    }
-    fetchData();
-  }, [])
+  useFetchData('/purchases/client/'+clientId, setClientPurchases, () => {}, () => setIsLoading(false))
 
   useEffect(() => {
     const months = clientPurchases.reduce((acc, clientPurchase) => {
@@ -64,7 +49,7 @@ export default function RewardsPoints() {
   return <Main>
     <MainHeader>
       <PrimaryButton onClick={() => navigate(-1)}>
-        {"<"}
+        Back
       </PrimaryButton>
       <h2>Reward points for {isLoading || !clientPurchases.length ? '...' : clientPurchases[0].clientName}</h2>
 
