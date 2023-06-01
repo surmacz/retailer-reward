@@ -108,3 +108,7 @@ export const Td = styled.td`
   padding: 1rem 0 1rem 0.6rem;
   text-align: ${(props) => props.align || 'left'};
 `
+export const Error = styled.h2`
+  color: #e8241a;
+  padding: 0 1rem;
+`

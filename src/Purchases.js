@@ -11,6 +11,7 @@ import {
   Thead,
   Tbody,
   TableContainer,
+  Error,
 } from './components'
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from './utils'
@@ -20,10 +21,11 @@ function Purchases() {
   const navigate = useNavigate()
 
   const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   useFetchData(
     '/purchases',
     setPurchases,
-    () => {},
+    () => setIsError(true),
     () => setIsLoading(false)
   )
 
@@ -34,6 +36,8 @@ function Purchases() {
       </MainHeader>
       {isLoading ? (
         <Loading data-testid="loading-spinner" />
+      ) : isError ? (
+        <Error>Error while getting data. Try again!</Error>
       ) : (
         <TableContainer>
           <Table>

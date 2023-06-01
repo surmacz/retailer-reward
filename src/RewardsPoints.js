@@ -13,44 +13,55 @@ import {
   Thead,
   Tbody,
   TableContainer,
+  Error,
 } from './components'
 import { useFetchData } from './utils'
 
 export default function RewardsPoints() {
-  const [isLoading, setIsLoading] = useState(true)
   const [clientPurchases, setClientPurchases] = useState([])
   const [clientMonthlyPoints, setClientMonthlyPoints] = useState([])
   const { clientId } = useParams()
   const navigate = useNavigate()
 
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   useFetchData(
     '/purchases/client/' + clientId,
     setClientPurchases,
-    () => {},
+    () => setIsError(true),
     () => setIsLoading(false)
   )
 
   useEffect(() => {
-    const months = clientPurchases.reduce((acc, clientPurchase) => {
+    const monthsWithPoints = clientPurchases.reduce((acc, clientPurchase) => {
       const month = clientPurchase.date.substring(0, 7)
-      let value = Math.floor(clientPurchase.value)
-      let points = 0
-      if (value > 100) {
-        points += 2 * (value - 100)
-        value = 100
-      }
-      if (value >= 50) {
-        points += value - 50
-      }
+      const points = calculatePoints(Math.floor(clientPurchase.value))
       acc[month] ? (acc[month] += points) : (acc[month] = points)
       return acc
+
+      function calculatePoints(value) {
+        let points = 0
+        if (value > 100) {
+          points += 2 * (value - 100)
+          value = 100
+        }
+        if (value >= 50) {
+          points += value - 50
+        }
+        return points
+      }
     }, {})
 
-    setClientMonthlyPoints(
-      Object.keys(months)
+    setClientMonthlyPoints(convertObjToArray(monthsWithPoints))
+
+    function convertObjToArray(monthsWithPoints) {
+      return Object.keys(monthsWithPoints)
         .sort()
-        .reduce((acc, month) => [...acc, { month, points: months[month] }], [])
-    )
+        .reduce(
+          (acc, month) => [...acc, { month, points: monthsWithPoints[month] }],
+          []
+        )
+    }
   }, [clientPurchases])
 
   return (
@@ -66,6 +77,8 @@ export default function RewardsPoints() {
       </MainHeader>
       {isLoading ? (
         <Loading data-testid="loading-spinner" />
+      ) : isError ? (
+        <Error>Error while getting data. Try again!</Error>
       ) : (
         <>
           <TableContainer>
