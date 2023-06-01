@@ -15,10 +15,11 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from './utils'
 
-function App() {
-  const [isLoading, setIsLoading] = useState(true)
+function Purchases() {
   const [purchases, setPurchases] = useState([])
   const navigate = useNavigate()
+
+  const [isLoading, setIsLoading] = useState(true)
   useFetchData(
     '/purchases',
     setPurchases,
@@ -32,15 +33,13 @@ function App() {
         <h2>Clients Purchases</h2>
       </MainHeader>
       {isLoading ? (
-        <Loading />
+        <Loading data-testid="loading-spinner" />
       ) : (
         <TableContainer>
           <Table>
             <Thead>
               <Tr>
-                <Th align="center" key="1">
-                  Purchase ID
-                </Th>
+                <Th key="1">Purchase ID</Th>
                 <Th key="2">Date</Th>
                 <Th key="3">Value</Th>
                 <Th key="4">Client name</Th>
@@ -50,9 +49,7 @@ function App() {
             <Tbody>
               {purchases.map((purchase) => (
                 <Tr key={purchase.id}>
-                  <Td align="center" key="1">
-                    {purchase.id}
-                  </Td>
+                  <Td key="1">{purchase.id}</Td>
                   <Td key="2">{purchase.date}</Td>
                   <Td key="3">{purchase.value}</Td>
                   <Td key="4">{purchase.clientName}</Td>
@@ -75,4 +72,4 @@ function App() {
   )
 }
 
-export default App
+export default Purchases

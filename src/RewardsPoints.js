@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   Loading,
   PrimaryButton,
@@ -66,7 +65,7 @@ export default function RewardsPoints() {
         </h2>
       </MainHeader>
       {isLoading ? (
-        <Loading />
+        <Loading data-testid="loading-spinner" />
       ) : (
         <>
           <TableContainer>
@@ -78,8 +77,11 @@ export default function RewardsPoints() {
                 </Tr>
               </Thead>
               <Tbody>
-                {clientMonthlyPoints.map((clientMonthlyPoint) => (
-                  <Tr key={clientMonthlyPoint.month}>
+                {clientMonthlyPoints.map((clientMonthlyPoint, i) => (
+                  <Tr
+                    key={clientMonthlyPoint.month}
+                    data-testid={'reward-points-row-' + i}
+                  >
                     <Td key="1">{clientMonthlyPoint.month}</Td>
                     <Td key="2">{clientMonthlyPoint.points}</Td>
                   </Tr>
@@ -87,7 +89,7 @@ export default function RewardsPoints() {
               </Tbody>
             </Table>
           </TableContainer>
-          <Total>
+          <Total data-testid="total">
             <h3>
               Total points:{' '}
               {clientMonthlyPoints.reduce(
