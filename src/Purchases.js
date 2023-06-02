@@ -37,13 +37,17 @@ function Purchases() {
             {purchases.map((purchase) => (
               <Tr key={purchase.id}>
                 <Td key="1">{purchase.id}</Td>
-                <Td key="2">{purchase.date}</Td>
-                <Td key="3">{purchase.value}</Td>
-                <Td key="4">{purchase.clientName}</Td>
+                <Td key="2">
+                  {new Intl.DateTimeFormat('en-GB', {
+                    dateStyle: 'medium',
+                  }).format(new Date(purchase.date))}
+                </Td>
+                <Td key="3">{purchase.value.toFixed(2)}</Td>
+                <Td key="4">{purchase.client.name}</Td>
                 <Td key="5">
                   <WarningButton
                     onClick={() =>
-                      navigate('/reward-points/client/' + purchase.clientId)
+                      navigate('/reward-points/client/' + purchase.client.id)
                     }
                   >
                     Show reward points

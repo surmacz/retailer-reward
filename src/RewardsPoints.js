@@ -45,7 +45,16 @@ export default function RewardsPoints() {
       return Object.keys(monthsWithPoints)
         .sort()
         .reduce(
-          (acc, month) => [...acc, { month, points: monthsWithPoints[month] }],
+          (acc, month) => [
+            ...acc,
+            {
+              month: new Intl.DateTimeFormat('en-GB', {
+                year: 'numeric',
+                month: 'short',
+              }).format(new Date(month + '-01')),
+              points: monthsWithPoints[month],
+            },
+          ],
           []
         )
     }
@@ -60,7 +69,7 @@ export default function RewardsPoints() {
           <PrimaryButton onClick={() => navigate(-1)}>Back</PrimaryButton>
           <h2>
             Reward points for{' '}
-            {clientPurchases.length ? clientPurchases[0].clientName : '...'}
+            {clientPurchases.length ? clientPurchases[0].client.name : '...'}
           </h2>
         </>
       }
