@@ -34,19 +34,22 @@ export function useFetchData(
   onError = () => {},
   onFinally = () => {}
 ) {
-  console.log('>>>>')
   useEffect(() => {
+    const controller = new AbortController()
+
     async function fetchData() {
       const { installMocks } = await import('./mocks/browser')
       installMocks()
 
       let response
       try {
-        response = await fetch(url)
-      } catch {
-        console.error(ERROR_MESSAGE)
-        onError()
-        onFinally()
+        response = await fetch(url, { signal: controller.signal })
+      } catch (e) {
+        if (e.name !== 'AbortError') {
+          console.error(e)
+          onError()
+          onFinally()
+        }
         return
       }
 
@@ -59,5 +62,7 @@ export function useFetchData(
       onFinally()
     }
     fetchData()
+
+    return () => controller.abort()
   }, [])
 }
