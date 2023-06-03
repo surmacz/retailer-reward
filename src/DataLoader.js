@@ -38,7 +38,7 @@ export function useFetchData(
     const controller = new AbortController()
 
     async function fetchData() {
-      const { installMocks } = await import('./mocks/browser')
+      const { installMocks } = await import('./api/browser')
       installMocks()
 
       let response
