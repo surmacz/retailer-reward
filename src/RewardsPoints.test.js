@@ -20,7 +20,7 @@ test('renders reward points table and total caption', () => {
             date: '2023-01-01',
             client: {
               id: 1,
-              name: 'John Waine',
+              name: 'John Wayne',
             },
           },
           {
@@ -29,7 +29,7 @@ test('renders reward points table and total caption', () => {
             date: '2023-01-01',
             client: {
               id: 1,
-              name: 'John Waine',
+              name: 'John Wayne',
             },
           },
           {
@@ -38,7 +38,7 @@ test('renders reward points table and total caption', () => {
             date: '2023-01-01',
             client: {
               id: 1,
-              name: 'John Waine',
+              name: 'John Wayne',
             },
           },
           {
@@ -47,7 +47,7 @@ test('renders reward points table and total caption', () => {
             date: '2023-02-01',
             client: {
               id: 1,
-              name: 'John Waine',
+              name: 'John Wayne',
             },
           },
         ])

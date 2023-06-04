@@ -19,7 +19,7 @@ test('renders purchases table', () => {
             date: '2023-01-01',
             client: {
               id: 1,
-              name: 'John Waine',
+              name: 'John Wayne',
             },
           },
           {
@@ -43,7 +43,7 @@ test('renders purchases table', () => {
   expect(table).toHaveTextContent('Purchase ID')
   expect(table).toHaveTextContent('999.99')
   expect(table).toHaveTextContent('1 Jan 2023')
-  expect(table).toHaveTextContent('John Waine')
+  expect(table).toHaveTextContent('John Wayne')
   expect(table).toHaveTextContent('123.30')
   expect(table).toHaveTextContent('11 Apr 2022')
   expect(table).toHaveTextContent('Tom Cruise')

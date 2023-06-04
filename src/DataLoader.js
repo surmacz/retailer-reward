@@ -64,5 +64,6 @@ function useFetchData(
     fetchData()
 
     return () => controller.abort()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
