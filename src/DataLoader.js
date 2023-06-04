@@ -28,7 +28,7 @@ export default function DataLoader({ url, setData, children, header }) {
   )
 }
 
-export function useFetchData(
+function useFetchData(
   url,
   onSuccess,
   onError = () => {},
