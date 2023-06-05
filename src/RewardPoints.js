@@ -13,16 +13,16 @@ import {
 } from './components'
 import DataLoader from './DataLoader'
 
-export default function RewardsPoints() {
-  const [clientPurchases, setClientPurchases] = useState([])
-  const [clientMonthlyPoints, setClientMonthlyPoints] = useState([])
+export default function RewardPoints() {
+  const [purchases, setPurchases] = useState([])
+  const [pointsInMonths, setPointsInMonths] = useState([])
   const { clientId } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
-    const monthsWithPoints = clientPurchases.reduce((acc, clientPurchase) => {
-      const month = clientPurchase.date.substring(0, 7)
-      const points = calculatePoints(Math.floor(clientPurchase.value))
+    const pointsInMonthsObj = purchases.reduce((acc, purchase) => {
+      const month = purchase.date.substring(0, 7)
+      const points = calculatePoints(Math.floor(purchase.value))
       acc[month] ? (acc[month] += points) : (acc[month] = points)
       return acc
 
@@ -32,17 +32,17 @@ export default function RewardsPoints() {
           points += 2 * (value - 100)
           value = 100
         }
-        if (value >= 50) {
+        if (value > 50) {
           points += value - 50
         }
         return points
       }
     }, {})
 
-    setClientMonthlyPoints(convertObjToArray(monthsWithPoints))
+    setPointsInMonths(convertObjToArray(pointsInMonthsObj))
 
-    function convertObjToArray(monthsWithPoints) {
-      return Object.keys(monthsWithPoints)
+    function convertObjToArray(pointsInMonthsObj) {
+      return Object.keys(pointsInMonthsObj)
         .sort()
         .reduce(
           (acc, month) => [
@@ -52,24 +52,24 @@ export default function RewardsPoints() {
                 year: 'numeric',
                 month: 'short',
               }).format(new Date(month + '-01')),
-              points: monthsWithPoints[month],
+              points: pointsInMonthsObj[month],
             },
           ],
           []
         )
     }
-  }, [clientPurchases])
+  }, [purchases])
 
   return (
     <DataLoader
       url={'/purchases/client/' + clientId}
-      setData={setClientPurchases}
+      setData={setPurchases}
       header={
         <>
           <PrimaryButton onClick={() => navigate(-1)}>Back</PrimaryButton>
           <h2>
             Reward points for{' '}
-            {clientPurchases.length ? clientPurchases[0].client.name : '...'}
+            {purchases.length ? purchases[0].client.name : '...'}
           </h2>
         </>
       }
@@ -83,13 +83,13 @@ export default function RewardsPoints() {
             </Tr>
           </Thead>
           <Tbody>
-            {clientMonthlyPoints.map((clientMonthlyPoint, i) => (
+            {pointsInMonths.map((pointsInMonth, i) => (
               <Tr
-                key={clientMonthlyPoint.month}
+                key={pointsInMonth.month}
                 data-testid={'reward-points-row-' + i}
               >
-                <Td key="1">{clientMonthlyPoint.month}</Td>
-                <Td key="2">{clientMonthlyPoint.points}</Td>
+                <Td key="1">{pointsInMonth.month}</Td>
+                <Td key="2">{pointsInMonth.points}</Td>
               </Tr>
             ))}
           </Tbody>
@@ -98,8 +98,8 @@ export default function RewardsPoints() {
       <Total data-testid="total">
         <h3>
           Total points:{' '}
-          {clientMonthlyPoints.reduce(
-            (acc, clientMonthlyPoints) => acc + clientMonthlyPoints.points,
+          {pointsInMonths.reduce(
+            (acc, pointsInMonth) => acc + pointsInMonth.points,
             0
           )}
         </h3>

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import Purchases from './Purchases'
-import RewardPoints from './RewardsPoints'
+import RewardPoints from './RewardPoints'
 
 const router = createBrowserRouter([
   {

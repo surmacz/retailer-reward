@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { useEffect } from 'react'
-import RewardsPoints from './RewardsPoints'
+import RewardPoints from './RewardPoints'
 import * as DataLoader from './DataLoader'
 
 jest.mock('react-router-dom', () => ({
@@ -55,7 +55,7 @@ test('renders reward points table and total caption', () => {
       return children
     })
 
-  render(<RewardsPoints />)
+  render(<RewardPoints />)
 
   const firstRow = screen.queryByTestId('reward-points-row-0')
   expect(firstRow).toHaveTextContent('Jan 2023')
